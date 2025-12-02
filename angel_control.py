@@ -137,9 +137,11 @@ def main():
             print("1. 控制YAW轴")
             print("2. 控制PITCH轴") 
             print("3. 回中")
-            print("4. 退出")
+            print("4. 吊装模式")
+            print("5. 倒装模式")
+            print("6. 退出")
             
-            choice = input("请选择操作 (1-4): ").strip()
+            choice = input("请选择操作 (1-6): ").strip()
             
             if choice == "1":
                 axis = "yaw"
@@ -150,6 +152,14 @@ def main():
                 time.sleep(0.5)
                 continue
             elif choice == "4":
+                controller.send_custom_command(MODE_NORMAL_CMD)
+                time.sleep(0.5)
+                continue
+            elif choice == "5":
+                controller.send_custom_command(MODE_REVERSE_CMD)
+                time.sleep(0.5)
+                continue
+            elif choice == "6":
                 break
             else:
                 print("无效选择，请重新输入")

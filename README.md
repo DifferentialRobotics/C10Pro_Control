@@ -16,7 +16,7 @@
   python angel_control.py
 ```
 
-根据脚本输出的提示选择需要控制的轴后输入期望角度即可。目前支持yaw角和pitch角控制，以及一键回中。
+根据脚本输出的提示选择需要控制的轴后输入期望角度即可。目前支持yaw角和pitch角控制、一键回中、吊装模式和倒装模式。
 
 3.本项目还提供了发送用户自定义控制指令脚本[custom_control.py](custom_control.py)，并提供了几种控制指令示例：
 ```
@@ -33,4 +33,20 @@
 用户可以使用示例指命令或根据[云卓云台相机协议v1.1.5](云卓云台相机协议v1.1.5.pdf)自定义控制指令，将其传至 **send_custom_command** 接口中，并运行该脚本发送指令：
 ```
   python custom_control.py
+```
+
+4.在无人机端拉流方式
+```
+  ffplay rtsp://192.168.144.108:554/stream=0 -vf vflip #在无人机端终端输入
+```
+
+4.在主机端拉流方式
+
+4.1先在无人机端推流
+```
+  ffmpeg -rtsp_transport tcp -i rtsp://192.168.144.108:554/stream=0 -c copy -f mpegts "udp://192.168.120.58:8080?pkt_size=1316" #在无人机端终端输入，udp://*改为你主机端的ip
+```
+4.2在主机端拉流
+```
+  ffplay -vf vflip -fflags nobuffer -flags low_delay -framedrop udp://192.168.120.58:8080 #在主机端终端输入，udp://*改为你主机端的ip
 ```
